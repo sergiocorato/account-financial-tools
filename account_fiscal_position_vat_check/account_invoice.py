@@ -27,7 +27,7 @@ class AccountInvoice(models.Model):
                     invoice.type in ('out_invoice', 'out_refund') and
                     invoice.fiscal_position and
                     invoice.fiscal_position.customer_must_have_vat and
-                    not invoice.partner_id.vat):
+                    not invoice.partner_id.vat and invoice.partner_id.is_company):
                 if invoice.type == 'out_invoice':
                     type_label = _('a Customer Invoice')
                 else:
@@ -38,8 +38,8 @@ class AccountInvoice(models.Model):
                       "with the fiscal position '%s' "
                       "that require the customer to have a VAT number. "
                       "But the Customer '%s' doesn't "
-                      "have a VAT number in OpenERP."
-                      "Please add the VAT number of this Customer in Odoo "
+                      "have a VAT number."
+                      "Please add the VAT number of this Customer "
                       " and try to validate again.")
                     % (type_label, invoice.fiscal_position.name,
                         invoice.partner_id.name))

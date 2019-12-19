@@ -13,7 +13,8 @@ class ResPartner(models.Model):
         """Warning if the fiscal position requires a VAT number and the
         partner doesn't have one yet"""
         fp = self.property_account_position
-        if fp.customer_must_have_vat and self.customer and not self.vat:
+        if fp.customer_must_have_vat and self.customer and not self.vat \
+                and self.is_company:
             return {
                 'warning': {
                     'title': _('Missing VAT number:'),
